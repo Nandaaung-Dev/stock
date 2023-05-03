@@ -55,8 +55,8 @@ class ItemContrller extends Controller
             'owner_name' =>'required',
             'owner_phone' =>'required',
             'owner_address' => 'required',
-            // 'latitude' => 'required',
-            // 'longtitude' => 'required',
+            'latitude' => 'required',
+            'longtitude' => 'required',
             'is_published' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
@@ -78,8 +78,8 @@ class ItemContrller extends Controller
             'owner_name' => $request->owner_name,
             'owner_phone' => $request->owner_phone,
             'owner_address' => $request->owner_address,
-            'latitude' => '12',
-            'longtitude' => '13',
+            'latitude' => $request->latitude ,
+            'longtitude' => $request->longtitude,
             'is_published' => $request->is_published ? 1 : 0,
             'image' => $image_path,
         ]);
@@ -99,6 +99,15 @@ class ItemContrller extends Controller
         return view('item.show', [
             'item' => $item
         ]);
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        // dd($request->status);
+        $item = Item::find($id);
+        $item->is_published = $request->status == "on" ? 1 : 0;
+        $item->save();
+        return redirect()->back()->with('success', 'Status has been updated successfully');
     }
 
     /**
@@ -138,8 +147,8 @@ class ItemContrller extends Controller
             'owner_name' =>'required',
             'owner_phone' =>'required',
             'owner_address' => 'required',
-            // 'latitude' => 'required',
-            // 'longtitude' => 'required',
+            'latitude' => 'required',
+            'longtitude' => 'required',
             'is_published' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
@@ -159,6 +168,8 @@ class ItemContrller extends Controller
         $item->owner_name = $request->owner_name;
         $item->owner_phone = $request->owner_phone;
         $item->owner_address = $request->owner_address;
+        $item->latitude = $request->latitude ;
+        $item->longtitude = $request->longtitude;
         $item->is_published = $request->is_published ? 1 : 0;
         $item->save();
 

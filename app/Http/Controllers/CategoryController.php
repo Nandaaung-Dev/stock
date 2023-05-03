@@ -73,6 +73,16 @@ class CategoryController extends Controller
         ]);
     }
 
+
+    public function changeStatus(Request $request, $id)
+    {
+        // dd("$request");
+        $item = Category::find($id);
+        $item->is_published = $request->status == "on" ? 1 : 0;
+        $item->save();
+        return redirect()->back()->with('success', 'Status has been updated successfully');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
