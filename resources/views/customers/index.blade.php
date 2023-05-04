@@ -10,8 +10,10 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
         <!-- product card -->
         @foreach ($items as $item)
+
+        {{-- {{ $item->image }} --}}
             <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="https://www.apple.com/newsroom/images/product/iphone/standard/apple_iphone-12-spring21_lp_us_04202021.jpg.og.jpg?202303302114">
+                <img class="w-full" src="{{ url('storage/images/items/'.$item->image) }}">
                 <div class="px-1 py-4">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-xl mb-2">{{$item->name}}</h3>

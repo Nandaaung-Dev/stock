@@ -64,9 +64,17 @@ class ItemContrller extends Controller
 
         $image_path = '';
 
+        // if ($request->hasFile('image')) {
+        //     $image_path = $request->file('image')->store('images/items', 'public');
+        // }
+
+
         if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('images/items', 'public');
+            $image = $request->file('image');
+            $image_path = md5(time()) . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images/items', $image_path);
         }
+
 
         Item::create([
             'name' => $request->name,
@@ -153,10 +161,18 @@ class ItemContrller extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
 
+        // if ($request->hasFile('image')) {
+        //     $image_path = $request->file('image')->store('images/items', 'public');
+        //     $item->image = $image_path;
+        // }
+
         if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('images/items', 'public');
+            $image = $request->file('image');
+            $image_path = md5(time()) . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images/items', $image_path);
             $item->image = $image_path;
         }
+
 
 
         $item->name = $request->name;

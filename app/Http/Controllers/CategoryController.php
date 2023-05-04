@@ -47,8 +47,14 @@ class CategoryController extends Controller
 
         $image_path = '';
 
+        // if ($request->hasFile('image')) {
+        //     $image_path = $request->file('image')->store('images/categories', 'public');
+        // }
+
         if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('images/categories', 'public');
+            $image = $request->file('image');
+            $image_path = md5(time()) . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images/categories', $image_path);
         }
 
         Category::create([
@@ -111,8 +117,15 @@ class CategoryController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
 
+        // if ($request->hasFile('image')) {
+        //     $image_path = $request->file('image')->store('images/categories', 'public');
+        //     $category->image = $image_path;
+        // }
+
         if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('images/categories', 'public');
+            $image = $request->file('image');
+            $image_path = md5(time()) . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images/categories', $image_path);
             $category->image = $image_path;
         }
 

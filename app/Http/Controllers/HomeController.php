@@ -26,6 +26,7 @@ class HomeController extends Controller
     {
         $items = Item::all();
         // return $items;
+        // dd($items[1]->getAttribute('image'));
         return view('customers.index',[
             "items" => $items
         ]);
